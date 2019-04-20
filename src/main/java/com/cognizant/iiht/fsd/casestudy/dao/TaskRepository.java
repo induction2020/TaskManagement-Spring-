@@ -27,6 +27,8 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 	@Query("SELECT t FROM Task t WHERE t.priority >= :lowPriority and t.priority <= :highPriority ") 
 	public List<Task> findTaskByPriority(@Param("lowPriority") int lowPriority, @Param("highPriority") int highPriority);
 
-	@Query("SELECT t FROM Task t WHERE t.startDate >=: startDate and t.endDate 	<= :endDate ")
-	public List<Task> findTaskByDates(String startDate, String endDate);
+	@Query("SELECT t FROM Task t WHERE t.startDate >= :startDate and t.endDate 	<= :endDate ")
+	public List<Task> findTaskByDates(@Param("startDate") String startDate, @Param("endDate") String endDate);
+	
+	
 } 
