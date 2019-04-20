@@ -49,7 +49,6 @@ public class ParentTaskDo implements Serializable{
 	}
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@MapsId
 	@JoinColumn(name = "TASK_ID", nullable = false)
 	@JsonIgnore
 	private Task task;

@@ -31,15 +31,22 @@ public class TaskServiceImpl implements TaskService{
 		taskDo.setPriority(taskDto.getPriority());
 		
 		
+		System.out.println("taskDto.getParentName:"+taskDto.getParentName());
 		
-		if(taskDto.getParentId()>0){
-			ParentTaskDo parentTaskDo =  new ParentTaskDo();
+		if(taskDto.getParentName()!=null &&
+				 ! taskDto.getParentName().isEmpty() ){
+			
 			Task taskDoTemp = findTaskByName(taskDto.getParentName());
-			parentTaskDo.setParentId(taskDoTemp.getTaskId());
-			parentTaskDo.setParentTask(taskDoTemp.getTask());
-			parentTaskDo.setParentTask(taskDoTemp.getTask());
-			parentTaskDo.setTaskdo(taskDo);
+			System.out.println("taskDoTemp:"+taskDoTemp);
+			ParentTaskDo parentTaskDo = new ParentTaskDo( taskDoTemp.getTaskId() , taskDoTemp.getTask() );
+			
 			taskDo.setParentTaskDo(parentTaskDo);
+			parentTaskDo.setTaskdo(taskDo);
+			
+			System.out.println("taskDo111:"+taskDo.getParentTaskDo().getParentId());
+			System.out.println("ParentTaskDo222:"+parentTaskDo.getTaskdo().getParentTaskDo().getParentId());
+			
+			
 		}
 		
 		return taskrepository.save(taskDo);

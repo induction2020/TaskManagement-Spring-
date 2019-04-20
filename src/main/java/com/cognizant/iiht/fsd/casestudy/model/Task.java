@@ -88,6 +88,10 @@ public class Task implements Serializable{
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		return "Task [taskId=" + taskId + ", task=" + task + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", priority=" + priority + ", parentTaskDo=" + parentTaskDo + "]";
+	}	
 	
 }

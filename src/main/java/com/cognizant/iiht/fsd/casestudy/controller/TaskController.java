@@ -1,5 +1,6 @@
 package com.cognizant.iiht.fsd.casestudy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -40,7 +41,7 @@ public class TaskController {
 		taskDto.setStartDate("Date1");
 		taskDto.setEndDate("Date2");
 		taskDto.setPriority(10);
-		taskDto.setParentName("Thiruppathi Madhu Upd");
+		taskDto.setParentName("Thiruppathi499");
 		taskService.addTask(taskDto);
 		
 		List<Task> listOfTasks = taskService.findAllTasks();
@@ -70,9 +71,23 @@ public class TaskController {
 	
 	//Retrieve All Tasks
 	 @GetMapping
-	 public List<Task> listTasks(){
+	 public List<TaskDto> listTasks(){
 		 System.out.println("listTasks");
-		return taskService.findAllTasks();
+		 List<Task> listOfTasks = taskService.findAllTasks();
+		 List<TaskDto> listOfTasksDto = new ArrayList<>(); 
+		 TaskDto taskDto = null;
+		 for(int i=0; i<listOfTasks.size(); i++){
+			 taskDto = new TaskDto();
+			 System.out.println("listOfTasks.get(i): "+ listOfTasks.get(i));
+			 BeanUtils.copyProperties(listOfTasks.get(i), taskDto);
+			 if( listOfTasks.get(i).getParentTaskDo() != null ){
+				 taskDto.setParentId( listOfTasks.get(i).getParentTaskDo().getParentId() );
+				 taskDto.setParentName( listOfTasks.get(i).getParentTaskDo().getParentTask());
+				 System.out.println("taskDto: "+taskDto.toString()); 
+			 }
+			 listOfTasksDto.add( taskDto );
+		 }
+		return listOfTasksDto;
 	 }
 	 
 	 //Retrieve One Task
