@@ -114,6 +114,13 @@ public class TaskServiceImpl implements TaskService{
 		taskrepository.findTaskByDates(startDate, endDate).iterator().forEachRemaining(listOfTasks :: add);
 		return listOfTasks;
 	}
+
+	@Override
+	public List<Task> searchTask(String taskName) {
+		List<Task> listOfTasks = new ArrayList<Task>();
+		taskrepository.searchTask(taskName).iterator().forEachRemaining(listOfTasks :: add);
+		return listOfTasks;
+	}
 	
 
 }

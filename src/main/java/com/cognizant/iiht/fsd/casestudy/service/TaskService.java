@@ -15,6 +15,7 @@ public TaskDto updateTask(TaskDto taskDto);
 public void deleteTask(long taskId);
 public Task findTask(long taskId);
 public Task findTaskByName(String taskName);
+public List<Task> searchTask(String taskName);
 
 //Update Parent Task
 public TaskDto updateParentTask(TaskDto taskDto);

@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.iiht.fsd.casestudy.model.ApiResponse;
 import com.cognizant.iiht.fsd.casestudy.model.Task;
 import com.cognizant.iiht.fsd.casestudy.model.TaskDto;
+import com.cognizant.iiht.fsd.casestudy.model.TaskSearch;
 import com.cognizant.iiht.fsd.casestudy.service.TaskService;
 
 @CrossOrigin(origins = "*", maxAge = 3600,  allowedHeaders = "*")
@@ -96,7 +98,7 @@ public class TaskController {
 	
 	
 	 //Update Task
-	 @PutMapping("/{id}")
+	 @PutMapping
      public TaskDto update(@RequestBody TaskDto taskDto) {
          return taskService.updateTask(taskDto);
      }
@@ -110,9 +112,10 @@ public class TaskController {
 	 }
 			
 	 //Search Task By Name
-	 @RequestMapping(value="/searchByTask/{taskName}")
-	 public ApiResponse<List<Task>> searchTaskByName(@PathVariable("taskName") String taskName ){
-		return new ApiResponse<>(HttpStatus.OK.value(), "Tasks fetched successfully.", taskService.findTaskByName(taskName));
+	 @RequestMapping(value="/searchByTask", method= RequestMethod.GET )
+	 public Task searchByTask( ){
+		 System.out.println("...searchByTask...");
+		return taskService.findTaskByName("hhg");
 		
 		//Example: http://localhost:8098/tasks/searchByTask/Thiruppathi%20Madhu%20Upd
 	 }
@@ -142,6 +145,15 @@ public class TaskController {
 		return new ApiResponse<>(HttpStatus.OK.value(), "Tasks fetched successfully.", taskService.findTaskByDates(startDate, endDate) );
 		
 		//Example: http://localhost:8098/tasks/searchByParentTask/Thiruppathi%20Madhu
+	 }
+	 
+	//Search
+	 @RequestMapping(value="/search", method= RequestMethod.POST)
+	 public List<Task> searchTask(@RequestBody TaskSearch tasksearch){
+		 System.out.println("search method");
+		
+		 return taskService.searchTask(tasksearch.getTask());
+		
 	 }
 	
 
